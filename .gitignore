@@ -1,0 +1,6 @@
+//Zip files with the original boilerplate codes for projects
+*.zip
+
+//Temp files from emacs
+*~
+
