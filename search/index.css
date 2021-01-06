@@ -90,6 +90,11 @@ a:hover {
     height: 46px;
 }
 
+.search-input:hover {
+    border-color: rgba(223, 225, 229, 0);
+    box-shadow: 0 1px 6px rgba(32,33,36,.28);
+}
+
 .search-input input {
     border: 0;
     box-sizing: border-box;
@@ -106,6 +111,42 @@ a:hover {
     text-shadow: none;
     text-align: start;
     appearance: textfield;
+    font: 400 13.3333px Arial;
+    font-size: 16px;
 }
 
-.search-buttons {}
+.search-buttons {
+    height: 70px;
+    padding-top: 18px;
+}
+
+.center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.search-buttons input {
+    background-color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    border-radius: 4px;
+    color: #3c4043;
+    font-family: arial,sans-serif;
+    font-size: 14px;
+    margin: 11px 4px;
+    padding: 0 16px;
+    line-height: 27px;
+    height: 36px;
+    min-width: 54px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.search-buttons input:hover {
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    background-image: -webkit-linear-gradient(top,#f8f9fa,#f8f9fa);
+    background-color: #f8f9fa;
+    border: 1px solid #dadce0;
+    color: #202124;
+}
