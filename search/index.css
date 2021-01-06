@@ -150,3 +150,42 @@ a:hover {
     border: 1px solid #dadce0;
     color: #202124;
 }
+
+.adv-title-wrap {
+    color: #d93025;
+    font-size: 20px;
+    margin: 25px 35px;
+}
+
+.adv-title-wrap label {
+    margin-left: 10px;
+}
+
+.adv-form-wrap {
+    margin: 40px 2% 0 45px;;
+}
+
+.adv-form-title {
+    font-size: 16px;
+    min-height: 42px;
+    padding: 6px 0;
+}
+.adv-form-row {
+    display: flex;
+    justify-content: flex-start;
+    min-height: 42px;
+    padding-right: 40px;
+}
+.adv-form-label {
+    font-size: 13px;
+    padding: 6px 0;
+    width: 167px;
+}
+.adv-form-button-wrap {
+    display: flex;
+    justify-content: flex-end;
+    min-height: 50px;
+}
+.adv-form-button-wrap input {
+    
+}
