@@ -164,32 +164,52 @@ a:hover {
     margin: 40px 2% 0 45px;;
 }
 .adv-form-title {
+    box-sizing: border-box;
     font-size: 16px;
     min-height: 42px;
     padding: 6px 0;
 }
-.adv-form-row {
-    display: flex;
-    justify-content: flex-start;
-    min-height: 42px;
-    padding-right: 40px;
+
+.adv-form-grid {
+    display: grid;
+    grid-template-columns: 167px clamp(150px, 50%, 572px) auto;
+    grid-template-areas: 
+    "all all-input ."
+    "exact exact-input ."
+    "any any-input ."
+    "none none-input ."
+    ". button .";
 }
+.all-words {grid-area: all;}
+.all-input {grid-area: all-input;}
+.exact-words {grid-area: exact;}
+.exact-input {grid-area: exact-input;}
+.any-words {grid-area: any;}
+.any-input {grid-area: any-input;}
+.none-words {grid-area: none;}
+.none-input {grid-area: none-input;}
+
+
+
 .adv-form-label {
+    box-sizing: border-box;
     font-size: 13px;
+    height: 42px;
     padding: 6px 0;
     width: 167px;
 }
-.adv-form-row input {
+.adv-form-grid input {
     border: 1px solid #d9d9d9;
     border-top: 1px solid #c0c0c0;;
     height: 25px;
     max-width: 572px;
-    width: 50%;
+    width: calc(100% - 6px);
 }
 .adv-form-button-wrap {
     align-items: center;
     display: flex;
-    justify-content: flex-start;
+    grid-area: button;
+    justify-content: flex-end;
     min-height: 50px;
 }
 .adv-button-filler {
@@ -204,9 +224,10 @@ a:hover {
     background: #4d90fe;
     border: 1px solid #3079ed;
     border-radius: 2px;
+    box-sizing: border-box;
     color: #fff;
     height: 30px;
     font-size: 11px;
     font-weight: bold;
-    min-width: 120px;
+    width: 120px;
 }
