@@ -7,6 +7,22 @@ class SearchForm(forms.Form):
     search = forms.CharField(label="Search")
 
 def index(request):
+    if request.method == "POST":
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search = form.cleaned_data["search"]
+            all_entries = util.list_entries()
+            if search in all_entries:
+                entry = util.get_entry(search)
+                html_entry = markdown(entry)
+                return render(request, "encyclopedia/entry.html", {
+                    "title": search,
+                    "entry": html_entry,
+                    "form": SearchForm(),
+                })
+
+
+
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries(),
         "form": SearchForm(),
