@@ -15,7 +15,6 @@ def index(request):
     })
 
 def add(request):
-
     #Check if methos is POST
     if request.method == "POST":
         form = NewTaskForm(request.POST)
