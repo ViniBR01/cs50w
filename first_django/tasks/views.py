@@ -3,7 +3,7 @@ from django import forms
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
-tasks = ["task1", "task2", "task3"]
+tasks = []
 
 class NewTaskForm(forms.Form):
     task = forms.CharField(label="New Task")
