@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django import forms
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -16,15 +16,7 @@ def index(request):
             search = form.cleaned_data["search"]
             all_entries = util.list_entries()
             if search in all_entries:
-                content = util.get_entry(search)
-                html_entry = markdown(content)
-                #Fix-me: redirect to a entry page instead
-                #return HttpResponseRedirect(reverse("wiki:entry", kwargs={ "title": search, "entry": html_entry, "form": SearchForm() }))
-                return render(request, "encyclopedia/entry.html", {
-                    "title": search,
-                    "entry": html_entry,
-                    "form": SearchForm(),
-                })
+                return redirect("wiki:entry", search)
             else:
                 #Find all entries that are related
                 related_entries = []
