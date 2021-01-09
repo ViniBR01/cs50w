@@ -69,3 +69,8 @@ def rand(request):
             "entry": html_entry,
             "form": SearchForm(),
         })
+
+def new(request):
+    return render(request, "encyclopedia/new.html", {
+            "form": SearchForm(),
+        })
