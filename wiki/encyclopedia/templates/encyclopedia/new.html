@@ -14,4 +14,7 @@
         <input type="submit">
     </form>
 
+    {% if error_message %}
+        <p style="color: red; padding-left: 15px;">This page already exists. Change the title of this entry or edit the original page.</p>
+    {% endif %}
 {% endblock %}

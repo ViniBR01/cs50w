@@ -21,12 +21,8 @@ h1 {
 }
 
 textarea {
-    height: 90vh;
+    height: 70vh;
     width: 80%;
-}
-
-.main {
-    padding: 10px;
 }
 
 .search {
@@ -49,4 +45,12 @@ textarea {
 
 .sidebar h2 {
     margin-top: 15px;
+}
+
+.main-page form {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 15px;
 }

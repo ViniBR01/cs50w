@@ -9,7 +9,7 @@
     </head>
     <body>
         <div class="page-wrap">
-            <div class="sidebar col-lg-2 col-md-3">
+            <div class="sidebar">
                 <h2>Wiki</h2>
                 <form action="{% url 'wiki:index' %}" method="post">
                     {% csrf_token %}
@@ -28,7 +28,7 @@
                 {% block nav %}
                 {% endblock %}
             </div>
-            <div class="main col-lg-10 col-md-9">
+            <div class="main-page">
                 {% block body %}
                 {% endblock %}
             </div>
