@@ -26,8 +26,9 @@ def index(request):
     })
 
 def search(request, search):
-    #Enhance-me: if query is an exact match, redirect to content page
     all_entries = util.list_entries()
+    if search in all_entries:
+        return redirect("wiki:entry", search)
     related_entries = []
     for entry in all_entries:
         if search in entry:
