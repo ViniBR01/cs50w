@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django import forms
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from . import util
 from markdown2 import markdown
 
@@ -13,15 +15,27 @@ def index(request):
             search = form.cleaned_data["search"]
             all_entries = util.list_entries()
             if search in all_entries:
-                entry = util.get_entry(search)
-                html_entry = markdown(entry)
+                content = util.get_entry(search)
+                html_entry = markdown(content)
+                #Fix-me: redirect to a entry page instead
+                #return HttpResponseRedirect(reverse("wiki:entry", kwargs={ "title": search, "entry": html_entry, "form": SearchForm() }))
                 return render(request, "encyclopedia/entry.html", {
                     "title": search,
                     "entry": html_entry,
                     "form": SearchForm(),
                 })
-
-
+            else:
+                #Find all entries that are related
+                related_entries = []
+                for entry in all_entries:
+                    if search in entry:
+                        related_entries += [entry]
+                #Fix-me: redirect to a search results page instead
+                return render(request, "encyclopedia/search.html", {
+                    "title": search,
+                    "entries": related_entries,
+                    "form": SearchForm(),
+                })
 
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries(),
