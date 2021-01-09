@@ -8,4 +8,9 @@
 
     {{ entry |safe}}
 
+    <form action="{% url 'wiki:edit' %}" method="GET">
+        <input type="hidden" name="entry" value="{{ title }}">
+        <input type="submit" value="Edit">
+    </form>
+
 {% endblock %}

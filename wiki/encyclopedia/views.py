@@ -13,6 +13,9 @@ class NewEntryForm(forms.Form):
     title = forms.CharField(label="Title")
     content = forms.CharField(widget=forms.Textarea)
 
+class EditEntryForm(forms.Form):
+    content = forms.CharField(widget=forms.Textarea)
+
 def index(request):
     if request.method == "POST":
         form = SearchForm(request.POST)
@@ -80,6 +83,15 @@ def new(request):
             "form": SearchForm(),
             "error_message": False,
         })
+
+def edit(request):
+    #Receive query parameter and use as title
+    title = request.GET['entry']
+    return render(request, "encyclopedia/edit.html", {
+        "title": title,
+        "edit_entry": EditEntryForm(),
+        "form": SearchForm,
+    })
 
 def rand(request):
     all_entries = util.list_entries()

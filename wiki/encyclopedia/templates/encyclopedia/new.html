@@ -11,7 +11,7 @@
     <form action="{% url 'wiki:new' %}" method="post">
         {% csrf_token %}
         {{ new_entry }}
-        <input type="submit">
+        <input type="submit" value="Save New Entry">
     </form>
 
     {% if error_message %}
