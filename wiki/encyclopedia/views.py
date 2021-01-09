@@ -63,19 +63,18 @@ def new(request):
         form = NewEntryForm(request.POST)
         if form.is_valid():
             title = form.cleaned_data["title"]
-            content = form.cleaned_data["content"]
-            #do something with input
-            #get all entries titles
             all_entries = util.list_entries()
-            #check if title is part of all entries
             if title in all_entries:
-                #if yes, rerender the form with an error message and the information back
                 return render(request, "encyclopedia/new.html", {
                     "new_entry": NewEntryForm(request.POST),
                     "form": SearchForm(),
                     "error_message": True,
                 })
-            #if no, save new entry file as an md entry using utils and redirect to entry page
+            else:
+                content = form.cleaned_data["content"]
+                util.save_entry(title, content)
+                return redirect("wiki:entry", title)
+    
     return render(request, "encyclopedia/new.html", {
             "new_entry": NewEntryForm(),
             "form": SearchForm(),
