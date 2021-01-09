@@ -1,6 +1,14 @@
+* {
+    box-sizing: border-box;
+}
 body {
     margin: 0;
     background-color: white;
+}
+
+.page-wrap {
+    display: grid;
+    grid-template-columns: 220px auto;
 }
 
 code {
@@ -30,9 +38,15 @@ textarea {
 .sidebar {
     background-color: #f0f0f0;
     height: 100vh;
-    padding: 20px;
+    padding: 10px;
+}
+
+.sidebar form {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar h2 {
-    margin-top: 5px;
+    margin-top: 15px;
 }
