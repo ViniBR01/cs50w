@@ -54,12 +54,12 @@ def entry(request, title):
             "form": SearchForm(),
         })
 
-def rand(request):
-    all_entries = util.list_entries()
-    rand_id = random.randint(0, len(all_entries) - 1)
-    return redirect("wiki:entry", all_entries[rand_id])
-
 def new(request):
     return render(request, "encyclopedia/new.html", {
             "form": SearchForm(),
         })
+
+def rand(request):
+    all_entries = util.list_entries()
+    rand_id = random.randint(0, len(all_entries) - 1)
+    return redirect("wiki:entry", all_entries[rand_id])
