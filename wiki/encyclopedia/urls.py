@@ -6,4 +6,5 @@ app_name = "wiki"
 urlpatterns = [
     path("", views.index, name="index"),
     path("wiki/<str:title>", views.entry, name="entry"),
+    path("rand", views.rand, name="rand"),
 ]

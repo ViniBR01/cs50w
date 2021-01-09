@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from . import util
 from markdown2 import markdown
+import random
 
 class SearchForm(forms.Form):
     search = forms.CharField(label="Search")
@@ -54,5 +55,17 @@ def entry(request, title):
     else:
         return render(request, "encyclopedia/404.html", {
             "title": title,
+            "form": SearchForm(),
+        })
+
+def rand(request):
+    all_entries = util.list_entries()
+    rand_id = random.randint(0, len(all_entries) - 1)
+    content = util.get_entry(all_entries[rand_id])
+    html_entry = markdown(content)
+    #Fix-me: redirect to entry page instead of opening the page in this url
+    return render(request, "encyclopedia/entry.html", {
+            "title": all_entries[rand_id],
+            "entry": html_entry,
             "form": SearchForm(),
         })
