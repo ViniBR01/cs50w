@@ -92,9 +92,7 @@ def edit(request):
             title = form.cleaned_data["title"]
             content = form.cleaned_data["content"]
             util.save_entry(title, content)
-            #return redirect("wiki:index")
             return redirect("wiki:entry", title)
-    #Receive query parameter and use as title
     title = request.GET['entry']
     content = util.get_entry(title)
     return render(request, "encyclopedia/edit.html", {
