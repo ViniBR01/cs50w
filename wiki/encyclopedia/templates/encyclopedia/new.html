@@ -8,4 +8,10 @@
 
     <h1>Create New Page</h1>
 
+    <form action="{% url 'wiki:new' %}" method="post">
+        {% csrf_token %}
+        {{ new_entry }}
+        <input type="submit">
+    </form>
+
 {% endblock %}

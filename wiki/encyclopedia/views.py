@@ -9,6 +9,10 @@ import random
 class SearchForm(forms.Form):
     search = forms.CharField(label="Search")
 
+class NewEntryForm(forms.Form):
+    title = forms.CharField(label="Title")
+    content = forms.CharField(widget=forms.Textarea)
+
 def index(request):
     if request.method == "POST":
         form = SearchForm(request.POST)
@@ -55,7 +59,14 @@ def entry(request, title):
         })
 
 def new(request):
+    if request.method == "POST":
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            #do something with input
     return render(request, "encyclopedia/new.html", {
+            "new_entry": NewEntryForm(),
             "form": SearchForm(),
         })
 
