@@ -53,14 +53,7 @@ def entry(request, title):
 def rand(request):
     all_entries = util.list_entries()
     rand_id = random.randint(0, len(all_entries) - 1)
-    content = util.get_entry(all_entries[rand_id])
-    html_entry = markdown(content)
-    #Fix-me: redirect to entry page instead of opening the page in this url
-    return render(request, "encyclopedia/entry.html", {
-            "title": all_entries[rand_id],
-            "entry": html_entry,
-            "form": SearchForm(),
-        })
+    return redirect("wiki:entry", all_entries[rand_id])
 
 def new(request):
     return render(request, "encyclopedia/new.html", {
