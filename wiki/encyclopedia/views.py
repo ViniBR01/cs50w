@@ -14,6 +14,7 @@ class NewEntryForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea)
 
 class EditEntryForm(forms.Form):
+    title = forms.CharField(widget=forms.HiddenInput(), required = False)
     content = forms.CharField(widget=forms.Textarea)
 
 def index(request):
@@ -85,11 +86,20 @@ def new(request):
         })
 
 def edit(request):
+    if request.method == "POST":
+        form = EditEntryForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            util.save_entry(title, content)
+            #return redirect("wiki:index")
+            return redirect("wiki:entry", title)
     #Receive query parameter and use as title
     title = request.GET['entry']
+    content = util.get_entry(title)
     return render(request, "encyclopedia/edit.html", {
         "title": title,
-        "edit_entry": EditEntryForm(),
+        "edit_entry": EditEntryForm({'title': title, 'content': content}),
         "form": SearchForm,
     })
 
