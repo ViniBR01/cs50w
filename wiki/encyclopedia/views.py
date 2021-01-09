@@ -18,20 +18,23 @@ def index(request):
             if search in all_entries:
                 return redirect("wiki:entry", search)
             else:
-                #Find all entries that are related
-                related_entries = []
-                for entry in all_entries:
-                    if search in entry:
-                        related_entries += [entry]
-                #Fix-me: redirect to a search results page instead
-                return render(request, "encyclopedia/search.html", {
-                    "title": search,
-                    "entries": related_entries,
-                    "form": SearchForm(),
-                })
+                return redirect("wiki:search", search)
 
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries(),
+        "form": SearchForm(),
+    })
+
+def search(request, search):
+    #Enhance-me: if query is an exact match, redirect to content page
+    all_entries = util.list_entries()
+    related_entries = []
+    for entry in all_entries:
+        if search in entry:
+            related_entries += [entry]
+    return render(request, "encyclopedia/search.html", {
+        "title": search,
+        "entries": related_entries,
         "form": SearchForm(),
     })
 
