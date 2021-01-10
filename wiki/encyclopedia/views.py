@@ -94,6 +94,9 @@ def edit(request):
             util.save_entry(title, content)
             return redirect("wiki:entry", title)
     title = request.GET['entry']
+    all_entries = util.list_entries()
+    if title not in all_entries:
+        return redirect("wiki:index")
     content = util.get_entry(title)
     return render(request, "encyclopedia/edit.html", {
         "title": title,
