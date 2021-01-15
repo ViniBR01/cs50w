@@ -15,7 +15,7 @@
             <li>No Passengers.</li>
         {% endfor %}
     </ul>
-    <form action="{% url 'book' flight.id %}" method="post">
+    <form action="{% url 'flights:book' flight.id %}" method="post">
         {% csrf_token %}
         <select name="passenger" id="">
             {% for passenger in non_passengers %}
@@ -24,5 +24,5 @@
         </select>
         <input type="submit">
     </form>
-    <a href="{% url 'index' %}">All Flights</a>
+    <a href="{% url 'flights:index' %}">All Flights</a>
 {% endblock %}
