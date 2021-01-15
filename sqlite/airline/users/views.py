@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-#from .models import Flight, Airport, Passenger
+from django.contrib.auth import logout
 
 # Create your views here.
 def index(request):
@@ -14,5 +14,7 @@ def login_view(request):
     return render(request, "users/login.html")
 
 def logout_view(request):
-    # Pass is a simple way to tell python to do nothing.
-    pass
+    logout(request)
+    return render(request, "users/login.html", {
+                "message": "Logged Out"
+            })
