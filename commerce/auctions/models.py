@@ -39,6 +39,7 @@ class Listing(models.Model):
     description = models.TextField() #fix-me
     price = models.DecimalField(decimal_places=2)
     date = models.DateTimeField(auto_now=True)
+    closed = models.BooleanField(default=False)
     image = models.URLField() #optional
     category = models.ForeignKey(
         Category, 
@@ -51,4 +52,10 @@ class Bid(models.Model):
     pass
 
 class Comment(models.Model):
-    pass
+    author = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name="comments"
+    )
+    text = models.TextField(max_length=1024)
+    date = models.DateTimeField(auto_now=True)
