@@ -53,7 +53,7 @@ class Bid(models.Model):
         related_name="bids"
     )
     value = models.DecimalField(max_digits=12, decimal_places=2)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now_add=True)
 
 class Comment(models.Model):
     author = models.ForeignKey(
