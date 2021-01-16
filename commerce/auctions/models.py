@@ -3,7 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    watchlist = models.ManyToManyField(Listing, blank=True, related_name="watchers")
 
 class Category(models.Model):
     NOT_DEFINED = 'ND'
@@ -36,14 +36,15 @@ class Category(models.Model):
 
 class Listing(models.Model):
     title = models.CharField(max_length=64)
+    description = models.TextField() #fix-me
     price = models.DecimalField(decimal_places=2)
-    date = models.DateTimeField(auto_now="true")
-    image = models.URLField()
+    date = models.DateTimeField(auto_now=True)
+    image = models.URLField() #optional
     category = models.ForeignKey(
         Category, 
         on_delete=models.CASCADE, 
         related_name="listings",
-    )
+    ) #optional
     pass
 
 class Bid(models.Model):
