@@ -33,7 +33,7 @@ class Category(models.Model):
 class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField() #fix-me
-    price = models.DecimalField(decimal_places=2)
+    price = models.DecimalField(max_digits=12, decimal_places=2)
     date = models.DateTimeField(auto_now=True)
     closed = models.BooleanField(default=False)
     image = models.URLField() #optional
@@ -50,9 +50,9 @@ class Bid(models.Model):
     author = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
-        related_name="comments"
+        related_name="bids"
     )
-    value = models.DecimalField(decimal_places=2)
+    value = models.DecimalField(max_digits=12, decimal_places=2)
 
 class Comment(models.Model):
     author = models.ForeignKey(
