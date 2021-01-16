@@ -1,10 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-
-class User(AbstractUser):
-    watchlist = models.ManyToManyField(Listing, blank=True, related_name="watchers")
-
 class Category(models.Model):
     NOT_DEFINED = 'ND'
     CLOTHING = 'CL'
@@ -46,10 +42,17 @@ class Listing(models.Model):
         on_delete=models.CASCADE, 
         related_name="listings",
     ) #optional
-    pass
+
+class User(AbstractUser):
+    watchlist = models.ManyToManyField(Listing, blank=True, related_name="watchers")
 
 class Bid(models.Model):
-    pass
+    author = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name="comments"
+    )
+    value = models.DecimalField(decimal_places=2)
 
 class Comment(models.Model):
     author = models.ForeignKey(
