@@ -32,7 +32,7 @@ class Category(models.Model):
 
 class Listing(models.Model):
     title = models.CharField(max_length=64)
-    description = models.TextField() #fix-me
+    description = models.TextField()
     price = models.DecimalField(max_digits=12, decimal_places=2)
     date = models.DateTimeField(auto_now=True)
     closed = models.BooleanField(default=False)
@@ -53,6 +53,7 @@ class Bid(models.Model):
         related_name="bids"
     )
     value = models.DecimalField(max_digits=12, decimal_places=2)
+    date = models.DateTimeField(auto_now=True)
 
 class Comment(models.Model):
     author = models.ForeignKey(
