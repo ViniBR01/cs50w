@@ -16,7 +16,7 @@ class Category(models.Model):
     TOYS = 'TY'
     SPORTS = 'SP'
     AUTOMOTIVE = 'AT'
-    CATEGORIES_CHOICES = [
+    CATEGORY_CHOICES = [
         (NOT_DEFINED, 'Not defined'),
         (CLOTHING, 'Clothing, Shoes, Jewelry and Watches'),
         (BOOKS, 'Books and School Suplies'),
@@ -30,11 +30,20 @@ class Category(models.Model):
     ]
     title = models.CharField(
         max_length=2,
-        choices=CATEGORIES_CHOICES,
+        choices=CATEGORY_CHOICES,
         default=NOT_DEFINED,
     )
 
 class Listing(models.Model):
+    title = models.CharField(max_length=64)
+    price = models.DecimalField(decimal_places=2)
+    date = models.DateTimeField(auto_now="true")
+    image = models.URLField()
+    category = models.ForeignKey(
+        Category, 
+        on_delete=models.CASCADE, 
+        related_name="listings",
+    )
     pass
 
 class Bid(models.Model):
