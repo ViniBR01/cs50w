@@ -17,7 +17,35 @@ class CreateListingForm(forms.Form):
     starting_bid.widget.attrs.update({'class' : 'form-control'})
     image_url = forms.URLField(label="Optional Image URL", required=False)
     image_url.widget.attrs.update({'class' : 'form-control'})
-    #category = forms.ChoiceField(label="Optional Category", required=False, choices=[<iterable list of tuples ('AA', 'Aaaaaaa')>])
+
+    NOT_DEFINED = 'ND'
+    CLOTHING = 'CL'
+    BOOKS = 'BK'
+    ELECTRONICS = 'EL'
+    HOME = 'HM'
+    FOOD = 'FD'
+    BEAUTY = 'BE'
+    TOYS = 'TY'
+    SPORTS = 'SP'
+    AUTOMOTIVE = 'AT'
+    CATEGORY_CHOICES = [
+        (NOT_DEFINED, 'Not defined'),
+        (CLOTHING, 'Clothing, Shoes, Jewelry and Watches'),
+        (BOOKS, 'Books and School Suplies'),
+        (ELECTRONICS, 'Electronics and Computers'),
+        (HOME, 'Home, Garden and Tools'),
+        (FOOD, 'Food and Groceries'),
+        (BEAUTY, 'Beauty and Health'),
+        (TOYS, 'Toys, Kids and Baby'),
+        (SPORTS, 'Sports and Outdoors'),
+        (AUTOMOTIVE, 'Automotive and Industrial'),
+    ]
+
+    category = forms.ChoiceField(
+        label="Optional Category", 
+        required=False, 
+        choices=CATEGORY_CHOICES
+    )
 
 
 # Views
