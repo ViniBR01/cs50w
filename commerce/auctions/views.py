@@ -3,10 +3,20 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django import forms
 
 from .models import User
 
+# Djago forms
+class CreateListingForm(forms.Form):
+    title = forms.CharField(label="Title", max_length=64)
+    description = forms.CharField(label="Description", widget=forms.Textarea)
+    starting_bid = forms.DecimalField(label="Starting bid", max_digits=10, decimal_places=2)
+    image_url = forms.URLField(label="Optional Image URL", required=False)
+    #category = forms.ChoiceField(label="Optional Category", required=False, choices=[<iterable list of tuples ('AA', 'Aaaaaaa')>])
 
+
+# Views
 def index(request):
     return render(request, "auctions/index.html")
 
@@ -65,6 +75,14 @@ def register(request):
 def create(request):
     if request.method == "POST":
         #Receive form info
+        form = CreateListingForm(request.POST)
+        if form.is_valid():
+            # Use data from form.cleaned_data: e.g., title = form.cleaned_data["title"]
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            # Error message for user about form error:
+            return HttpResponseRedirect(reverse("create"))
         pass
     else:
-        return render(request, "auctions/create.html")
+        form = CreateListingForm()
+        return render(request, "auctions/create.html", {'form': form})
