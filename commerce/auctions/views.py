@@ -5,14 +5,18 @@ from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 
-from .models import User
+from .models import User, Category, Listing, Bid, Comment
 
 # Djago forms
 class CreateListingForm(forms.Form):
     title = forms.CharField(label="Title", max_length=64)
+    title.widget.attrs.update({'class' : 'form-control'})
     description = forms.CharField(label="Description", widget=forms.Textarea)
+    description.widget.attrs.update({'class' : 'form-control'})
     starting_bid = forms.DecimalField(label="Starting bid", max_digits=10, decimal_places=2)
+    starting_bid.widget.attrs.update({'class' : 'form-control'})
     image_url = forms.URLField(label="Optional Image URL", required=False)
+    image_url.widget.attrs.update({'class' : 'form-control'})
     #category = forms.ChoiceField(label="Optional Category", required=False, choices=[<iterable list of tuples ('AA', 'Aaaaaaa')>])
 
 
