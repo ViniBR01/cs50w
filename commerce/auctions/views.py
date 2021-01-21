@@ -138,3 +138,9 @@ def create(request):
                 'form': form
             }
         )
+    
+def item(request):
+    if request.user.is_authenticated:
+        pass
+    else:
+        pass
