@@ -148,5 +148,5 @@ def item(request, item_id):
 @login_required(login_url='login')
 def watch(request, item_id):
     listing = Listing.objects.get(id=item_id)
-    #request.user.
+    request.user.watchlist.add(listing)
     return HttpResponseRedirect(reverse("item", args=(listing.id,)))
