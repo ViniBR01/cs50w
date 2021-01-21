@@ -139,8 +139,14 @@ def create(request):
             }
         )
     
-def item(request):
-    if request.user.is_authenticated:
-        pass
-    else:
-        pass
+def item(request, item_id):
+    listing = Listing.objects.get(id=item_id)
+    return render(request, 'auctions/item.html', {
+        'item': listing,
+    })
+
+@login_required(login_url='login')
+def watch(request, item_id):
+    listing = Listing.objects.get(id=item_id)
+    #request.user.
+    return HttpResponseRedirect(reverse("item", args=(listing.id,)))
