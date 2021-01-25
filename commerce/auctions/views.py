@@ -141,12 +141,20 @@ def create(request):
     
 def item(request, item_id):
     listing = Listing.objects.get(id=item_id)
+    watchlist_flag = False
+    if request.user.is_authenticated:
+        watchlist_flag = len(request.user.watchlist.filter(id=item_id))
     return render(request, 'auctions/item.html', {
         'item': listing,
+        'watchlist_flag': watchlist_flag,
     })
 
 @login_required(login_url='login')
 def watch(request, item_id):
     listing = Listing.objects.get(id=item_id)
-    request.user.watchlist.add(listing)
-    return HttpResponseRedirect(reverse("item", args=(listing.id,)))
+    if len(request.user.watchlist.filter(id=item_id)):
+        current_user = User.objects.filter(id=request.user.id).get()
+        current_user.watchlist.exclude(listing)
+    else:
+        request.user.watchlist.add(listing)
+    return HttpResponseRedirect(reverse("item", args=(item_id,)))

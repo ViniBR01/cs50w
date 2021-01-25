@@ -19,6 +19,9 @@ class Listing(models.Model):
     image = models.URLField() #optional
     category = models.CharField(max_length=2) #optional
 
+    def __str__(self):
+        return self.title
+
 class Bid(models.Model):
     author = models.ForeignKey(
         User, 

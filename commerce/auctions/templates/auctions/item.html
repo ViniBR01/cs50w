@@ -11,7 +11,11 @@
     {% if user.is_authenticated %}
         <form action="{% url 'watch' item.id %}" method="post">
             {% csrf_token %}
-            <input type="submit" value="Add to Watchlist">
+            {% if watchlist_flag %}
+                <input type="submit" value="Remove from Watchlist">
+            {% else %}
+                <input type="submit" value="Add to Watchlist">
+            {% endif %}
         </form>
     {% endif %}
 {% endblock %}
