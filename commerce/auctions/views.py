@@ -156,9 +156,14 @@ def item(request, item_id):
 @login_required(login_url='login')
 def watch(request, item_id):
     listing = Listing.objects.get(id=item_id)
-    if len(request.user.watchlist.filter(id=item_id)):
-        current_user = User.objects.filter(id=request.user.id).get()
-        current_user.watchlist.exclude(listing)
+    watching = Watchlist.objects.filter(user=request.user).filter(item=listing)
+    if len(watching) > 0:
+        #Must exclude item from db
+        watching.delete()
+        pass
     else:
-        request.user.watchlist.add(listing)
+        #must include item in db
+        watching = Watchlist(user=request.user, item=listing)
+        watching.save()
+        pass
     return HttpResponseRedirect(reverse("item", args=(item_id,)))
