@@ -167,3 +167,10 @@ def watch(request, item_id):
         watching.save()
         pass
     return HttpResponseRedirect(reverse("item", args=(item_id,)))
+
+@login_required(login_url='login')
+def watchlist(request):
+    watchlists = Watchlist.objects.filter(user=request.user)
+    return render(request, 'auctions/watchlist.html', {
+        'watchlists': watchlists,
+    })
