@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 class User(AbstractUser):
-    watchlist = models.ManyToManyField('Listing')
     pass
 
 class Listing(models.Model):
@@ -39,3 +38,15 @@ class Comment(models.Model):
     )
     text = models.TextField(max_length=1024)
     date = models.DateTimeField(auto_now=True)
+
+class Watchlist(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="watcher"
+    )
+    item = models.ForeignKey(
+        Listing,
+        on_delete=models.CASCADE,
+        related_name="watching"
+    )
