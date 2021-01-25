@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 
-from .models import User, Listing, Bid, Comment
+from .models import User, Listing, Bid, Comment, Watchlist
 
 # Djago forms
 class CreateListingForm(forms.Form):
@@ -143,7 +143,11 @@ def item(request, item_id):
     listing = Listing.objects.get(id=item_id)
     watchlist_flag = False
     if request.user.is_authenticated:
-        watchlist_flag = len(request.user.watchlist.filter(id=item_id))
+        watchlist_flag = len(
+            Watchlist.objects
+            .filter(user=request.user)
+            .filter(item=listing)
+        )
     return render(request, 'auctions/item.html', {
         'item': listing,
         'watchlist_flag': watchlist_flag,
