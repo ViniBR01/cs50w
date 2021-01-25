@@ -11,6 +11,8 @@
                 Author: {{ listing.author }} | 
                 Date: {{ listing.date }}
             </li>
+        {% empty %}
+            <li>We currently don't have any item in our website.</li>
         {% endfor %}
     </ul>
 {% endblock %}
