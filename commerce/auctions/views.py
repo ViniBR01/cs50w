@@ -168,6 +168,23 @@ def watch(request, item_id):
         pass
     return HttpResponseRedirect(reverse("item", args=(item_id,)))
 
+def categories(request):
+    category_list = [
+        'Not defined',
+        'Clothing, Shoes, Jewelry and Watches',
+        'Books and School Suplies',
+        'Electronics and Computers',
+        'Home, Garden and Tools',
+        'Food and Groceries',
+        'Beauty and Health',
+        'Toys, Kids and Baby',
+        'Sports and Outdoors',
+        'Automotive and Industrial',
+    ]
+    return render(request, 'auctions/categories.html', {
+        'categories': category_list,
+    })
+
 @login_required(login_url='login')
 def watchlist(request):
     watchlists = Watchlist.objects.filter(user=request.user)
