@@ -118,12 +118,14 @@ def create(request):
             description = form.cleaned_data["description"]
             starting_bid = form.cleaned_data["starting_bid"]
             image_url = form.cleaned_data["image_url"]
+            category = form.cleaned_data["category"]
             listing = Listing(
                 author=request.user,
                 title=title, 
                 description=description,
                 price=starting_bid,
                 image=image_url,
+                category=category,
             )
             listing.save()
             return HttpResponseRedirect(reverse("index"))
@@ -169,20 +171,30 @@ def watch(request, item_id):
     return HttpResponseRedirect(reverse("item", args=(item_id,)))
 
 def categories(request):
-    category_list = [
-        'Not defined',
-        'Clothing, Shoes, Jewelry and Watches',
-        'Books and School Suplies',
-        'Electronics and Computers',
-        'Home, Garden and Tools',
-        'Food and Groceries',
-        'Beauty and Health',
-        'Toys, Kids and Baby',
-        'Sports and Outdoors',
-        'Automotive and Industrial',
+    NOT_DEFINED = 'ND'
+    CLOTHING = 'CL'
+    BOOKS = 'BK'
+    ELECTRONICS = 'EL'
+    HOME = 'HM'
+    FOOD = 'FD'
+    BEAUTY = 'BE'
+    TOYS = 'TY'
+    SPORTS = 'SP'
+    AUTOMOTIVE = 'AT'
+    CATEGORY_CHOICES = [
+        (NOT_DEFINED, 'Not defined'),
+        (CLOTHING, 'Clothing, Shoes, Jewelry and Watches'),
+        (BOOKS, 'Books and School Suplies'),
+        (ELECTRONICS, 'Electronics and Computers'),
+        (HOME, 'Home, Garden and Tools'),
+        (FOOD, 'Food and Groceries'),
+        (BEAUTY, 'Beauty and Health'),
+        (TOYS, 'Toys, Kids and Baby'),
+        (SPORTS, 'Sports and Outdoors'),
+        (AUTOMOTIVE, 'Automotive and Industrial'),
     ]
     return render(request, 'auctions/categories.html', {
-        'categories': category_list,
+        'categories': CATEGORY_CHOICES,
     })
 
 @login_required(login_url='login')
