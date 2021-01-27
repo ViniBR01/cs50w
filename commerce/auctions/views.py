@@ -8,6 +8,29 @@ from django import forms
 
 from .models import User, Listing, Bid, Comment, Watchlist
 
+NOT_DEFINED = 'ND'
+CLOTHING = 'CL'
+BOOKS = 'BK'
+ELECTRONICS = 'EL'
+HOME = 'HM'
+FOOD = 'FD'
+BEAUTY = 'BE'
+TOYS = 'TY'
+SPORTS = 'SP'
+AUTOMOTIVE = 'AT'
+CATEGORY_CHOICES = [
+    (NOT_DEFINED, 'Not defined'),
+    (CLOTHING, 'Clothing, Shoes, Jewelry and Watches'),
+    (BOOKS, 'Books and School Suplies'),
+    (ELECTRONICS, 'Electronics and Computers'),
+    (HOME, 'Home, Garden and Tools'),
+    (FOOD, 'Food and Groceries'),
+    (BEAUTY, 'Beauty and Health'),
+    (TOYS, 'Toys, Kids and Baby'),
+    (SPORTS, 'Sports and Outdoors'),
+    (AUTOMOTIVE, 'Automotive and Industrial'),
+]
+
 # Djago forms
 class CreateListingForm(forms.Form):
     title = forms.CharField(label="Title", max_length=64)
@@ -18,29 +41,6 @@ class CreateListingForm(forms.Form):
     starting_bid.widget.attrs.update({'class' : 'form-control'})
     image_url = forms.URLField(label="Optional Image URL", required=False)
     image_url.widget.attrs.update({'class' : 'form-control'})
-
-    NOT_DEFINED = 'ND'
-    CLOTHING = 'CL'
-    BOOKS = 'BK'
-    ELECTRONICS = 'EL'
-    HOME = 'HM'
-    FOOD = 'FD'
-    BEAUTY = 'BE'
-    TOYS = 'TY'
-    SPORTS = 'SP'
-    AUTOMOTIVE = 'AT'
-    CATEGORY_CHOICES = [
-        (NOT_DEFINED, 'Not defined'),
-        (CLOTHING, 'Clothing, Shoes, Jewelry and Watches'),
-        (BOOKS, 'Books and School Suplies'),
-        (ELECTRONICS, 'Electronics and Computers'),
-        (HOME, 'Home, Garden and Tools'),
-        (FOOD, 'Food and Groceries'),
-        (BEAUTY, 'Beauty and Health'),
-        (TOYS, 'Toys, Kids and Baby'),
-        (SPORTS, 'Sports and Outdoors'),
-        (AUTOMOTIVE, 'Automotive and Industrial'),
-    ]
 
     category = forms.ChoiceField(
         label="Optional Category", 
@@ -171,37 +171,19 @@ def watch(request, item_id):
     return HttpResponseRedirect(reverse("item", args=(item_id,)))
 
 def categories(request):
-    NOT_DEFINED = 'ND'
-    CLOTHING = 'CL'
-    BOOKS = 'BK'
-    ELECTRONICS = 'EL'
-    HOME = 'HM'
-    FOOD = 'FD'
-    BEAUTY = 'BE'
-    TOYS = 'TY'
-    SPORTS = 'SP'
-    AUTOMOTIVE = 'AT'
-    CATEGORY_CHOICES = [
-        (NOT_DEFINED, 'Not defined'),
-        (CLOTHING, 'Clothing, Shoes, Jewelry and Watches'),
-        (BOOKS, 'Books and School Suplies'),
-        (ELECTRONICS, 'Electronics and Computers'),
-        (HOME, 'Home, Garden and Tools'),
-        (FOOD, 'Food and Groceries'),
-        (BEAUTY, 'Beauty and Health'),
-        (TOYS, 'Toys, Kids and Baby'),
-        (SPORTS, 'Sports and Outdoors'),
-        (AUTOMOTIVE, 'Automotive and Industrial'),
-    ]
     return render(request, 'auctions/categories.html', {
         'categories': CATEGORY_CHOICES,
     })
 
 def categorized(request, cat_id):
     listings = Listing.objects.all().filter(category=cat_id)
+    category = ''
+    for item in CATEGORY_CHOICES:
+        if item[0]==cat_id:
+            category = item[1]
     return render(request, 'auctions/categorized.html', {
         'listings': listings,
-        'category': cat_id,
+        'category': category,
     })
 @login_required(login_url='login')
 def watchlist(request):
