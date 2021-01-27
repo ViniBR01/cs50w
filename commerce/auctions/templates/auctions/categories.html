@@ -6,7 +6,7 @@
     <ul>
         {% for category in categories %}
             <li>
-                <a href="{% url 'index' %}">{{ category.1 }}</a>
+                <a href="{% url 'categorized' category.0 %}">{{ category.1 }}</a>
             </li>
         {% empty %}
             <li>We currently don't have any Categories in our website.</li>
