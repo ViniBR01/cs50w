@@ -185,6 +185,7 @@ def categorized(request, cat_id):
         'listings': listings,
         'category': category,
     })
+
 @login_required(login_url='login')
 def watchlist(request):
     watchlists = Watchlist.objects.filter(user=request.user)
