@@ -48,6 +48,9 @@ class CreateListingForm(forms.Form):
         choices=CATEGORY_CHOICES
     )
 
+class CommentForm(forms.Form):
+    text = forms.CharField(label="Comment", max_length=200, widget=forms.Textarea)
+    text.widget.attrs.update({'class' : 'form-control'})
 
 # Views
 def index(request):
