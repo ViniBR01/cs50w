@@ -17,5 +17,11 @@
                 <input type="submit" value="Add to Watchlist">
             {% endif %}
         </form>
+        <form action="{% url 'comment' item.id %}" method="post">
+            {% csrf_token %}
+            {{ comment_form }}
+            <input type="submit" value="Submit comment">
+        </form>
+        
     {% endif %}
 {% endblock %}
