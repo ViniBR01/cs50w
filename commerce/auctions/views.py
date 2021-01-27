@@ -153,9 +153,11 @@ def item(request, item_id):
             .filter(user=request.user)
             .filter(item=listing)
         )
+    form = CommentForm()
     return render(request, 'auctions/item.html', {
         'item': listing,
         'watchlist_flag': watchlist_flag,
+        'comment_form': form,
     })
 
 @login_required(login_url='login')
