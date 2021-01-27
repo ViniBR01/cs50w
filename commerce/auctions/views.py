@@ -177,7 +177,13 @@ def watch(request, item_id):
 
 @login_required(login_url='login')
 def comment(request, item_id):
-    return HttpResponseRedirect(reverse("item", args=(item_id,))) #fix-me
+    listing = Listing.objects.get(id=item_id)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        text = form.cleaned_data["text"]
+        comment = Comment(author=request.user, listing=listing, text=text)
+        comment.save()
+    return HttpResponseRedirect(reverse("item", args=(item_id,)))
 
 def categories(request):
     return render(request, 'auctions/categories.html', {
