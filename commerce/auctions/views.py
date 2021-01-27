@@ -197,6 +197,12 @@ def categories(request):
         'categories': CATEGORY_CHOICES,
     })
 
+def categorized(request, cat_id):
+    listings = Listing.objects.all().filter(category=cat_id)
+    return render(request, 'auctions/categorized.html', {
+        'listings': listings,
+        'category': cat_id,
+    })
 @login_required(login_url='login')
 def watchlist(request):
     watchlists = Watchlist.objects.filter(user=request.user)
