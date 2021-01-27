@@ -154,9 +154,11 @@ def item(request, item_id):
             .filter(item=listing)
         )
     form = CommentForm()
+    comments = Comment.objects.filter(listing=listing)
     return render(request, 'auctions/item.html', {
         'item': listing,
         'watchlist_flag': watchlist_flag,
+        'comments': comments,
         'comment_form': form,
     })
 
