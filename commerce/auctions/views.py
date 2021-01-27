@@ -175,6 +175,10 @@ def watch(request, item_id):
         pass
     return HttpResponseRedirect(reverse("item", args=(item_id,)))
 
+@login_required(login_url='login')
+def comment(request, item_id):
+    return HttpResponseRedirect(reverse("item", args=(item_id,))) #fix-me
+
 def categories(request):
     return render(request, 'auctions/categories.html', {
         'categories': CATEGORY_CHOICES,
