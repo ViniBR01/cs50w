@@ -39,7 +39,8 @@ class Comment(models.Model):
     listing = models.ForeignKey(
         Listing,
         on_delete=models.CASCADE, 
-        related_name="comments"
+        related_name="comments",
+        default="",
     )
     text = models.TextField(max_length=1024)
     date = models.DateTimeField(auto_now=True)
