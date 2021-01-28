@@ -165,15 +165,17 @@ def item(request, item_id):
             )
             if listing.author == request.user:
                 owner_flag = True
-        form = CommentForm()
+        bidding_form = BiddingForm()
+        comment_form = CommentForm()
         comments = Comment.objects.filter(listing=listing)
         return render(request, 'auctions/item.html', {
             'item': listing,
             'message': message,
             'watchlist_flag': watchlist_flag,
             'owner_flag': owner_flag,
+            'bidding_form': bidding_form,
             'comments': comments,
-            'comment_form': form,
+            'comment_form': comment_form,
         })
 
 @login_required(login_url='login')
