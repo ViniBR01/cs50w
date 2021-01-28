@@ -20,7 +20,7 @@
     {% endif %}
 
     {% if user.is_authenticated and owner_flag %}
-        <form action="{% url 'watch' item.id %}" method="post">
+        <form action="{% url 'close' item.id %}" method="post">
             {% csrf_token %}
             <input type="submit" value="Close the Auction">
         </form>
