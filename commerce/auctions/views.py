@@ -126,7 +126,8 @@ def create(request):
                 author=request.user,
                 title=title, 
                 description=description,
-                price=starting_bid,
+                starting_bid=starting_bid,
+                current_price=starting_bid,
                 image=image_url,
                 category=category,
             )
