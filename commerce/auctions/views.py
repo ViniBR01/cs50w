@@ -152,43 +152,48 @@ def create(request):
 def item(request, item_id):
     listing = Listing.objects.get(id=item_id)
     message = ""
+    #Fix-me: should update the current value based on all bids in case one bid was deleted
 
     if request.method == "POST":
-        #test if its valid
-        #save bid or show message of error
         form = BiddingForm(request.POST)
         if form.is_valid():
             # Use data from form.cleaned_data
             bid_value = form.cleaned_data["bid_value"]
             if bid_value >= listing.starting_bid and bid_value > listing.current_price:
-                bid = Bid()
+                Listing.objects.filter(id=item_id).update(current_price=bid_value)
+                listing = Listing.objects.get(id=item_id)
+                bid = Bid(
+                    author=request.user,
+                    listing=listing,
+                    value=bid_value,
+                )
                 bid.save()
                 message = "Successfuly received your bid"
             else:
-                message = "Your bid must be equal to the initial bid and larger than the previous"
-    else:
-        watchlist_flag = False
-        owner_flag = False
-        if request.user.is_authenticated:
-            watchlist_flag = len(
-                Watchlist.objects
-                .filter(user=request.user)
-                .filter(item=listing)
-            )
-            if listing.author == request.user:
-                owner_flag = True
-        bidding_form = BiddingForm()
-        comment_form = CommentForm()
-        comments = Comment.objects.filter(listing=listing)
-        return render(request, 'auctions/item.html', {
-            'item': listing,
-            'message': message,
-            'watchlist_flag': watchlist_flag,
-            'owner_flag': owner_flag,
-            'bidding_form': bidding_form,
-            'comments': comments,
-            'comment_form': comment_form,
-        })
+                message = "Error: Your bid must be equal to the initial bid and larger than the previous"
+
+    watchlist_flag = False
+    owner_flag = False
+    if request.user.is_authenticated:
+        watchlist_flag = len(
+            Watchlist.objects
+            .filter(user=request.user)
+            .filter(item=listing)
+        )
+        if listing.author == request.user:
+            owner_flag = True
+    bidding_form = BiddingForm()
+    comment_form = CommentForm()
+    comments = Comment.objects.filter(listing=listing)
+    return render(request, 'auctions/item.html', {
+        'item': listing,
+        'message': message,
+        'watchlist_flag': watchlist_flag,
+        'owner_flag': owner_flag,
+        'bidding_form': bidding_form,
+        'comments': comments,
+        'comment_form': comment_form,
+    })
 
 @login_required(login_url='login')
 def watch(request, item_id):
