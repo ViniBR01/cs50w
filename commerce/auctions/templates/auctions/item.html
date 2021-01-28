@@ -18,6 +18,14 @@
             {% endif %}
         </form>
     {% endif %}
+
+    {% if user.is_authenticated and owner_flag %}
+        <form action="{% url 'watch' item.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Close the Auction">
+        </form>
+    {% endif %}
+    
     <h3>Comments</h3>
     {% for comment in comments %}
         <p>{{ comment.author }}, in {{ comment.date }}, says:</p>

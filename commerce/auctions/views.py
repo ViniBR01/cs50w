@@ -148,17 +148,21 @@ def create(request):
 def item(request, item_id):
     listing = Listing.objects.get(id=item_id)
     watchlist_flag = False
+    owner_flag = False
     if request.user.is_authenticated:
         watchlist_flag = len(
             Watchlist.objects
             .filter(user=request.user)
             .filter(item=listing)
         )
+        if listing.author == request.user:
+            owner_flag = True
     form = CommentForm()
     comments = Comment.objects.filter(listing=listing)
     return render(request, 'auctions/item.html', {
         'item': listing,
         'watchlist_flag': watchlist_flag,
+        'owner_flag': owner_flag,
         'comments': comments,
         'comment_form': form,
     })
