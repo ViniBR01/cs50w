@@ -183,6 +183,10 @@ def watch(request, item_id):
     return HttpResponseRedirect(reverse("item", args=(item_id,)))
 
 @login_required(login_url='login')
+def close(request, item_id):
+    return HttpResponseRedirect(reverse("item", args=(item_id,)))
+
+@login_required(login_url='login')
 def comment(request, item_id):
     listing = Listing.objects.get(id=item_id)
     form = CommentForm(request.POST)
