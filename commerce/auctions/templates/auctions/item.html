@@ -29,6 +29,14 @@
             <input type="submit" value="Close the Auction">
         </form>
     {% endif %}
+
+    {% if user.is_authenticated and not owner_flag %}
+        <form action="{% url 'item' item.id %}" method="post">
+            {% csrf_token %}
+            {{ bidding_form }}
+            <input type="submit" value="Place Bid">
+        </form>
+    {% endif %}
     
     <h3>Comments</h3>
     {% for comment in comments %}
@@ -37,12 +45,12 @@
     {% empty %}
         <p>No comments were added to this bidding yet.</p>
     {% endfor %}
+
     {% if user.is_authenticated %}
         <form action="{% url 'comment' item.id %}" method="post">
             {% csrf_token %}
             {{ comment_form }}
             <input type="submit" value="Submit comment">
         </form>
-        
     {% endif %}
 {% endblock %}
