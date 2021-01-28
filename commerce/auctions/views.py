@@ -150,11 +150,23 @@ def create(request):
         )
     
 def item(request, item_id):
+    listing = Listing.objects.get(id=item_id)
+    message = ""
+
     if request.method == "POST":
-        pass
+        #test if its valid
+        #save bid or show message of error
+        form = BiddingForm(request.POST)
+        if form.is_valid():
+            # Use data from form.cleaned_data
+            bid_value = form.cleaned_data["bid_value"]
+            if bid_value >= listing.starting_bid and bid_value > listing.current_price:
+                bid = Bid()
+                bid.save()
+                message = "Successfuly received your bid"
+            else:
+                message = "Your bid must be equal to the initial bid and larger than the previous"
     else:
-        listing = Listing.objects.get(id=item_id)
-        message = ""
         watchlist_flag = False
         owner_flag = False
         if request.user.is_authenticated:
