@@ -31,7 +31,7 @@ class Bid(models.Model):
     listing = models.ForeignKey(
         Listing,
         on_delete=models.CASCADE, 
-        related_name="comments",
+        related_name="bids",
         default="",
     )
     value = models.DecimalField(max_digits=12, decimal_places=2)
