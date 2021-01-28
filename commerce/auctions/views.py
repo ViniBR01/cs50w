@@ -48,6 +48,10 @@ class CreateListingForm(forms.Form):
         choices=CATEGORY_CHOICES
     )
 
+class BiddingForm(forms.Form):
+    bid_value = forms.DecimalField(label="Your bid", max_digits=10, decimal_places=2)
+    bid_value.widget.attrs.update({'class' : 'form-control'})
+
 class CommentForm(forms.Form):
     text = forms.CharField(label="Comment", max_length=200, widget=forms.Textarea)
     text.widget.attrs.update({'class' : 'form-control'})
