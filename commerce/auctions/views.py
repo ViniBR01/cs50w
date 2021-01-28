@@ -147,6 +147,7 @@ def create(request):
     
 def item(request, item_id):
     listing = Listing.objects.get(id=item_id)
+    message = ""
     watchlist_flag = False
     owner_flag = False
     if request.user.is_authenticated:
@@ -161,6 +162,7 @@ def item(request, item_id):
     comments = Comment.objects.filter(listing=listing)
     return render(request, 'auctions/item.html', {
         'item': listing,
+        'message': message,
         'watchlist_flag': watchlist_flag,
         'owner_flag': owner_flag,
         'comments': comments,
@@ -184,6 +186,7 @@ def watch(request, item_id):
 
 @login_required(login_url='login')
 def close(request, item_id):
+    #Here, check if user is the owner and update status to closed=True
     return HttpResponseRedirect(reverse("item", args=(item_id,)))
 
 @login_required(login_url='login')
