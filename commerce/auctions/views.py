@@ -146,28 +146,31 @@ def create(request):
         )
     
 def item(request, item_id):
-    listing = Listing.objects.get(id=item_id)
-    message = ""
-    watchlist_flag = False
-    owner_flag = False
-    if request.user.is_authenticated:
-        watchlist_flag = len(
-            Watchlist.objects
-            .filter(user=request.user)
-            .filter(item=listing)
-        )
-        if listing.author == request.user:
-            owner_flag = True
-    form = CommentForm()
-    comments = Comment.objects.filter(listing=listing)
-    return render(request, 'auctions/item.html', {
-        'item': listing,
-        'message': message,
-        'watchlist_flag': watchlist_flag,
-        'owner_flag': owner_flag,
-        'comments': comments,
-        'comment_form': form,
-    })
+    if request.method == "POST":
+        pass
+    else:
+        listing = Listing.objects.get(id=item_id)
+        message = ""
+        watchlist_flag = False
+        owner_flag = False
+        if request.user.is_authenticated:
+            watchlist_flag = len(
+                Watchlist.objects
+                .filter(user=request.user)
+                .filter(item=listing)
+            )
+            if listing.author == request.user:
+                owner_flag = True
+        form = CommentForm()
+        comments = Comment.objects.filter(listing=listing)
+        return render(request, 'auctions/item.html', {
+            'item': listing,
+            'message': message,
+            'watchlist_flag': watchlist_flag,
+            'owner_flag': owner_flag,
+            'comments': comments,
+            'comment_form': form,
+        })
 
 @login_required(login_url='login')
 def watch(request, item_id):
