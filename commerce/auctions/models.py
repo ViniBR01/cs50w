@@ -12,7 +12,8 @@ class Listing(models.Model):
     )
     title = models.CharField(max_length=64)
     description = models.TextField()
-    price = models.DecimalField(max_digits=12, decimal_places=2)
+    starting_bid = models.DecimalField(max_digits=12, decimal_places=2)
+    current_price = models.DecimalField(max_digits=12, decimal_places=2)
     date = models.DateTimeField(auto_now=True)
     closed = models.BooleanField(default=False)
     image = models.URLField() #optional
