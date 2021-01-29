@@ -152,7 +152,15 @@ def create(request):
 def item(request, item_id):
     listing = Listing.objects.get(id=item_id)
     message = ""
-    #Fix-me: should update the current value based on all bids in case one bid was deleted
+    #Fix-me: should not have a current price field. Should get current price from bids
+    price = 0
+    bids = Bid.objects.filter(listing=listing).order_by('date')
+    n_bids = len(bids)
+    if n_bids == 0:
+        price = listing.starting_bid
+    else:
+        price = bids[0].value
+    Listing.objects.filter(id=item_id).update(current_price=price)
 
     if request.method == "POST":
         form = BiddingForm(request.POST)
